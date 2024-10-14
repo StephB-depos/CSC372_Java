@@ -1,0 +1,65 @@
+public class BankAccount {
+	private String clientFN;
+	private String clientLN;
+	private int accountID;
+	protected double balance;
+	
+	// Default constructor
+	public BankAccount () {
+		this.clientFN = "Null";
+		this.clientLN = "Null";
+		this.accountID = 0;
+		this.balance = 0.0;
+	}
+	// Parameterized constructor
+	public BankAccount (String clientFN, String clientLN, int accountID, double balance) {
+		this.clientFN = clientFN;
+		this.clientLN = clientLN;
+		this.accountID = accountID;
+		this.balance = balance;
+	}
+	// Setters
+	public void setClientFN (String clientFN) {
+		this.clientFN = clientFN;
+	}
+	public void setClientLN (String clientLN) {
+		this.clientLN = clientLN;
+	}
+	public void setAccountID (int accountID) {
+		this.accountID = accountID;
+	}
+	
+	// Getters
+	public String getClientFN() {
+		return clientFN;
+	}
+	public String getClientLN() {
+		return clientLN;
+	}
+	public int getAccountID() {
+		return accountID;
+	}
+	// getter to return the balance
+	public double getBalance() {
+		return balance;
+	}
+	
+	// Method for deposit
+	public void deposit(double amount) {
+		// add amount from user to our balance
+		balance += amount;
+	}
+	// Method for withdrawal
+	public void withdrawal(double amount) {
+		// subtract amount from user from balance
+		balance -= amount;
+	}
+	
+	// print out account summary
+	public void accountSummary() {
+		System.out.println("Account summary for " + clientFN + " " + clientLN + ": ");
+		System.out.println("Account ID: " + accountID);
+		System.out.println("Balance: $" + balance);
+	}
+	
+}
