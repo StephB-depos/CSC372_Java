@@ -1,0 +1,18 @@
+public class TestClass {
+	public static void main(String[] args) {
+		// Create new checkingAccount
+		CheckingAccount account = new CheckingAccount("Elena", "Gilbert", 12345, 150.0, 4.0 );
+		
+		// Test deposit
+		account.deposit(100);
+		account.displayAccount();
+		
+		// Test withdrawal
+		account.withdrawal(50);
+		account.displayAccount();
+		
+		// Test withdrawal with overdraft fee
+		account.processWithdrawal(80);
+		account.displayAccount();
+	}
+}
