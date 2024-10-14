@@ -1,0 +1,34 @@
+public class CheckingAccount extends BankAccount {
+	// interest rate for check account
+	private double interestRate;
+
+
+	// Constructor
+	public CheckingAccount(String clientFN, String clientLN, int accountID, double balance, double interestRate) {
+		// call the superclass constructor
+		super(clientFN, clientLN, accountID, balance);
+		this.interestRate = interestRate;
+	}
+	//withdrawal with overdraft fees
+	public void processWithdrawal(double amount) {
+		if(amount > balance) {
+			// overdraft fee
+			double fee = 30.0;
+			balance -= (amount + fee);
+			System.out.println("Due to the withdrawal of $" + amount + " exceeds balance. The overdraft fee $"
+					+ fee + " has been applied.");
+			System.out.printf("New balance(including overdraft fees): $%.2f\n", balance);
+		}
+		else {
+			// use the superclass withdrawal method created in BankAccount class
+			withdrawal(amount);
+			System.out.printf("Withdrew: $%.2f\n", amount);
+			System.out.printf("New balance: $%.2f\n", balance);
+		}
+	}
+	public void displayAccount() {
+		// use the superclass account summary method from BankAccount class
+		accountSummary();
+		System.out.printf("Interest Rate: %.2f%%\n", interestRate);
+	}
+}
