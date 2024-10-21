@@ -126,7 +126,7 @@ public class SimpleBankGUI {
 					// Add a check to see if sufficient balance is available for a deposit to happen
 					if (withdraw <= balance) {
 						balance -= withdraw;
-						displayArea.append("\nAmount withdrawn: $" + withdraw + "\n");
+						displayArea.append("Amount withdrawn: $" + withdraw);
 						displayArea.append("\nTotal balance: $" + balance + "\n");
 						
 					}
