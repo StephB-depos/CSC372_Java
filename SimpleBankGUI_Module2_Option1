@@ -58,12 +58,6 @@ public class SimpleBankGUI {
 		displayArea.setEditable(false);
 		// Add line wrap
 		displayArea.setLineWrap(true);
-		// Add set wrap style
-		displayArea.setWrapStyleWord(true);
-		// We can add a background color
-		displayArea.setBackground(Color.YELLOW);
-		// Add a scrolling capability
-		panel.add(new JScrollPane(displayArea));
 		
 		// action listener for the submit button
 		submitButton.addActionListener(new ActionListener() {
@@ -72,10 +66,10 @@ public class SimpleBankGUI {
 				String initialBalance = balanceField.getText();
 				try {
 					balance = Double.parseDouble(initialBalance);
-					displayArea.append("The initial balance set: $" + balance);
+					displayArea.append("\nThe initial balance set: $" + balance);
 				}
 				catch (NumberFormatException ex) {
-					displayArea.append("Invalid! The initial balance could not be computed.\n");
+					displayArea.append("\nInvalid! The initial balance could not be computed.\n");
 				}
 			}
 			
@@ -89,10 +83,10 @@ public class SimpleBankGUI {
 				try {
 					double deposit = Double.parseDouble(depositAmount);
 					balance += deposit;
-					displayArea.append("Amount Deposited: $" + deposit);
+					displayArea.append("\nAmount Deposited: $" + deposit);
 				}
 				catch (NumberFormatException ex) {
-					displayArea.append("Invalid! The deposit balance could not be computed.\n");
+					displayArea.append("\nInvalid! The deposit balance could not be computed.\n");
 				}
 			}
 		});
@@ -107,14 +101,14 @@ public class SimpleBankGUI {
 					// Add a check to see if sufficient balance is available for a deposit to happen
 					if (withdraw <= balance) {
 						balance -= withdraw;
-						displayArea.append("Amount withdrawn: $" + withdraw + "\n");
+						displayArea.append("\nAmount withdrawn: $" + withdraw + "\n");
 					}
 					else {
-						displayArea.append("Invalid! There is not sufficient funds.");
+						displayArea.append("\nInvalid! There is not sufficient funds.");
 					}
 				}
 				catch (NumberFormatException ex) {
-					displayArea.append("Invalid! The withdrawal balance could not be computed.\n");
+					displayArea.append("\nInvalid! The withdrawal balance could not be computed.\n");
 				}
 			}
 		});
@@ -123,7 +117,7 @@ public class SimpleBankGUI {
 		exitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				displayArea.append("Remaining Balance: $" + balance + "\n");
+				displayArea.append("\nRemaining Balance: $" + balance + "\n");
 				System.exit(0);
 			}
 		});
