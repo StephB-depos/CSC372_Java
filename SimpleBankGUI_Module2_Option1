@@ -24,28 +24,38 @@ public class SimpleBankGUI {
 		// center the frame on the screen
 		frame.setLocationRelativeTo(null);
 		
-		// Create a JPanel for holding components
-		JPanel panel = new JPanel();
-		// 4 rows, 2 columns
-		panel.setLayout(new GridLayout(5, 2, 10, 10));
+		// Create a JPanel for holding components with a GridBagLayout to help have control over components
+		JPanel mainPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 10, 10, 10);
+
+		//create panel for initial balance
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		mainPanel.add(new JLabel("The initial balance is: "), gbc);
+		balanceField = new JTextField(10);
+		gbc.gridx = 1;
+		mainPanel.add(balanceField, gbc);
 		
-		// Create the label and text field for the initial balance
-		panel.add(new JLabel("Add the initial balance: "));
-		balanceField = new JTextField();
-		panel.add(balanceField);
+		//create panel for depositing
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		mainPanel.add(new JLabel("The deposit amount is: "), gbc);
+		depositField = new JTextField(10);
+		gbc.gridx = 1;
+		mainPanel.add(depositField,gbc);
 		
-		// Create the label and text field for the deposit
-		panel.add(new JLabel("Add the deposit balance: "));
-		depositField = new JTextField();
-		panel.add(depositField);
+		//create panel for depositing
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		mainPanel.add(new JLabel("The withdrawal amount is: "), gbc);
+		withdrawField = new JTextField(10);
+		gbc.gridx = 1;
+		mainPanel.add(withdrawField,gbc);
 		
-		// Create the label and text field for the withdrawal
-		panel.add(new JLabel("Add the withdrawal balance: "));
-		withdrawField = new JTextField();
-		panel.add(withdrawField);
-		
+		JPanel buttonPanel = new JPanel();
 		// Create the button for initial balance
-		JButton submitButton = new JButton("Initial Balance");
+		JButton submitButton = new JButton("Set Balance");
 		// Create the button for deposit
 		JButton depositButton = new JButton("Deposit");
 		// Create the button for withdrawal
@@ -53,15 +63,25 @@ public class SimpleBankGUI {
 		// Create the button to exit the application
 		JButton exitButton = new JButton("Exit");
 		
+		// Add the buttons to the panel
+		buttonPanel.add(submitButton);
+		buttonPanel.add(depositButton);
+		buttonPanel.add(withdrawButton);
+		buttonPanel.add(exitButton);
+		
 		// Create a text area to display message
-		displayArea = new JTextArea(5,20);
+		displayArea = new JTextArea(5,30);
 		displayArea.setEditable(false);
-		// Add line wrap
-		displayArea.setLineWrap(true);
-		// Add set wrap style
-		displayArea.setWrapStyleWord(true);
-		// Add a scrolling capability
-		panel.add(new JScrollPane(displayArea));
+		JScrollPane scrollPane = new JScrollPane(displayArea);
+		
+		//Add components to the main panel
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 2;
+		mainPanel.add(buttonPanel, gbc);
+		
+		gbc.gridy = 4;
+		mainPanel.add(scrollPane, gbc);
 		
 		// action listener for the submit button
 		submitButton.addActionListener(new ActionListener() {
@@ -88,6 +108,7 @@ public class SimpleBankGUI {
 					double deposit = Double.parseDouble(depositAmount);
 					balance += deposit;
 					displayArea.append("\nAmount Deposited: $" + deposit);
+					displayArea.append("\nTotal balance: $" + balance + "\n");
 				}
 				catch (NumberFormatException ex) {
 					displayArea.append("\nInvalid! The deposit balance could not be computed.\n");
@@ -106,6 +127,8 @@ public class SimpleBankGUI {
 					if (withdraw <= balance) {
 						balance -= withdraw;
 						displayArea.append("\nAmount withdrawn: $" + withdraw + "\n");
+						displayArea.append("\nTotal balance: $" + balance + "\n");
+						
 					}
 					else {
 						displayArea.append("\nInvalid! There is not sufficient funds.");
@@ -125,18 +148,12 @@ public class SimpleBankGUI {
 				System.exit(0);
 			}
 		});
-		// Add the buttons to the panel
-		panel.add(submitButton);
-		panel.add(withdrawButton);
-		panel.add(depositButton);
-		panel.add(exitButton);
 		
 		// add the panel to the main frame
-		frame.add(panel);
+		frame.add(mainPanel);
 		frame.setVisible(true);
 	}
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new SimpleBankGUI());
+		SwingUtilities.invokeLater(SimpleBankGUI::new);
 	}
 }
-
