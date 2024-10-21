@@ -1,0 +1,143 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SimpleBankGUI {
+	// Variable to hold balance
+	private double balance;
+	// Input field for the initial balance
+	private JTextField balanceField;
+	// Input field to hold the deposit amount
+	private JTextField depositField;
+	// Input text field to hold the withdraw amount
+	private JTextField withdrawField;
+	// Input field to display any messages
+	private JTextArea displayArea;
+
+	
+	public SimpleBankGUI() {
+		// Create the JFrame (main application window)
+		JFrame frame = new JFrame("Simple Bank Balance Application");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(400,300);
+		// center the frame on the screen
+		frame.setLocationRelativeTo(null);
+		
+		// Create a JPanel for holding components
+		JPanel panel = new JPanel();
+		// 4 rows, 2 columns
+		panel.setLayout(new GridLayout(5, 2, 10, 10));
+		
+		// Create the label and text field for the initial balance
+		panel.add(new JLabel("Add the initial balance: "));
+		balanceField = new JTextField();
+		panel.add(balanceField);
+		
+		// Create the label and text field for the deposit
+		panel.add(new JLabel("Add the deposit balance: "));
+		depositField = new JTextField();
+		panel.add(depositField);
+		
+		// Create the label and text field for the withdrawal
+		panel.add(new JLabel("Add the withdrawal balance: "));
+		withdrawField = new JTextField();
+		panel.add(withdrawField);
+		
+		// Create the button for initial balance
+		JButton submitButton = new JButton("Initial Balance");
+		// Create the button for deposit
+		JButton depositButton = new JButton("Deposit");
+		// Create the button for withdrawal
+		JButton withdrawButton = new JButton("Withdraw");
+		// Create the button to exit the application
+		JButton exitButton = new JButton("Exit");
+		
+		// Create a text area to display message
+		displayArea = new JTextArea(5,20);
+		displayArea.setEditable(false);
+		// Add line wrap
+		displayArea.setLineWrap(true);
+		// Add set wrap style
+		displayArea.setWrapStyleWord(true);
+		// We can add a background color
+		displayArea.setBackground(Color.YELLOW);
+		// Add a scrolling capability
+		panel.add(new JScrollPane(displayArea));
+		
+		// action listener for the submit button
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String initialBalance = balanceField.getText();
+				try {
+					balance = Double.parseDouble(initialBalance);
+					displayArea.append("The initial balance set: $" + balance);
+				}
+				catch (NumberFormatException ex) {
+					displayArea.append("Invalid! The initial balance could not be computed.\n");
+				}
+			}
+			
+		});
+		
+		// Action listener for the deposit button
+		depositButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String depositAmount = depositField.getText();
+				try {
+					double deposit = Double.parseDouble(depositAmount);
+					balance += deposit;
+					displayArea.append("Amount Deposited: $" + deposit);
+				}
+				catch (NumberFormatException ex) {
+					displayArea.append("Invalid! The deposit balance could not be computed.\n");
+				}
+			}
+		});
+		
+		// Action Listener for the withdraw button
+		withdrawButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String withdrawAmount = withdrawField.getText();
+				try {
+					double withdraw = Double.parseDouble(withdrawAmount);
+					// Add a check to see if sufficient balance is available for a deposit to happen
+					if (withdraw <= balance) {
+						balance -= withdraw;
+						displayArea.append("Amount withdrawn: $" + withdraw + "\n");
+					}
+					else {
+						displayArea.append("Invalid! There is not sufficient funds.");
+					}
+				}
+				catch (NumberFormatException ex) {
+					displayArea.append("Invalid! The withdrawal balance could not be computed.\n");
+				}
+			}
+		});
+		
+		// Action listen to exit the program
+		exitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				displayArea.append("Remaining Balance: $" + balance + "\n");
+				System.exit(0);
+			}
+		});
+		// Add the buttons to the panel
+		panel.add(submitButton);
+		panel.add(withdrawButton);
+		panel.add(depositButton);
+		panel.add(exitButton);
+		
+		// add the panel to the main frame
+		frame.add(panel);
+		frame.setVisible(true);
+	}
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new SimpleBankGUI());
+	}
+}
