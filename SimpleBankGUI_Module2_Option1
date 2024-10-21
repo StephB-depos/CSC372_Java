@@ -58,6 +58,10 @@ public class SimpleBankGUI {
 		displayArea.setEditable(false);
 		// Add line wrap
 		displayArea.setLineWrap(true);
+		// Add set wrap style
+		displayArea.setWrapStyleWord(true);
+		// Add a scrolling capability
+		panel.add(new JScrollPane(displayArea));
 		
 		// action listener for the submit button
 		submitButton.addActionListener(new ActionListener() {
@@ -135,3 +139,4 @@ public class SimpleBankGUI {
 		SwingUtilities.invokeLater(() -> new SimpleBankGUI());
 	}
 }
+
