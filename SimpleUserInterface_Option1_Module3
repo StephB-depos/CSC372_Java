@@ -1,0 +1,114 @@
+import javax.swing.*;
+import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
+
+public class MenuUserInterface extends JFrame {
+	// Suppress the warning about serialization
+	private static final long serialVersionUID = 1L;
+	// lets create our text area to display output
+	private JTextArea textArea;
+	
+	// lets set up our constructor to set up the user interface
+	public MenuUserInterface() {
+		// lets set up the frame
+		setTitle("The Best User Menu");
+		// size of the window
+		setSize(400,300);
+		// define close operation
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		// layout manager is set to BorderLayout
+		setLayout(new BorderLayout());
+		
+		// lets also create the text box that displays the output
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setBackground(Color.WHITE);
+		add(new JScrollPane(textArea), BorderLayout.CENTER);
+		
+		// lets create the menu bar and menu w/ our label
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu = new JMenu("Click Here for your options!");
+		
+		// lets add our menu items and link them to our corresponding action
+		menu.add(createMenuItem("Option 1: Show Date and Time", e -> showDateTime()));
+		menu.add(createMenuItem("Option 2: Save to File", e -> saveToFile()));
+		menu.add(createMenuItem("Option 3: Change The Background Color", e -> changeBackgroundColor()));
+		menu.add(createMenuItem("Option 4: Exit", e -> exitProgram()));
+		// lets add the menu to the menu bar
+		menuBar.add(menu);
+		// lets set the menu bar for the frame
+		setJMenuBar(menuBar);
+		// make sure our frame is visible!
+		setVisible(true);
+	}
+	// Lets create our method of our menu item with our action listener
+	private JMenuItem createMenuItem(String text, java.awt.event.ActionListener action) {
+		// new menu item with text
+		JMenuItem menuItem = new JMenuItem(text);
+		// add action listener to menu item
+		menuItem.addActionListener(action);
+		// return said menu item
+		return menuItem;
+	}
+	// method to show the date and time in the text area
+	private void showDateTime() {
+		// add formatting to the date and time
+		String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		textArea.setText(currentDateTime);
+	}
+	// Method to save contents of text area to a file named log.txt
+	private void saveToFile() {
+		// opens file in append mode
+		try(FileWriter writer = new FileWriter("log.txt", true)) {
+			// write to the file
+			writer.write(textArea.getText() + "\n");
+			// show a success message
+			JOptionPane.showMessageDialog(null, "The contents were saved successfully to the file!");
+		}
+		// catch any IO exceptions
+		catch (IOException ex) {
+			// error message
+			JOptionPane.showMessageDialog(null, "Error: Contents could not be saved to file: " + ex.getMessage());
+		}
+	}
+	// method to change the background color of the frame and text area
+	private void changeBackgroundColor() {
+		// generate a random green color
+		Color randomColor = getRandomGreenColor();
+		// change the background color
+		getContentPane().setBackground(randomColor);
+		// repaint the frame to apply new color
+		repaint();
+		// Display the new color with its hex format
+		textArea.setText("Background color has been changed to:" + String.format("#%06X",(0xFFFFFF & randomColor.getRGB())));
+	}
+	// Method to generate the random green color
+	private Color getRandomGreenColor() {
+		// our random object
+		Random random = new Random();
+		// random value of green
+		int green = random.nextInt(256);
+		int red = random.nextInt(128);
+		int blue = random.nextInt(128);
+		// return random green color RGB
+		return new Color(red, green, blue);
+	}
+	// method for exiting the program
+	private void exitProgram() {
+		// asks for user confirmation before exiting
+		int confirmed = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit Confirmation",
+			JOptionPane.YES_NO_OPTION);
+		// will exit if the user selects yes to confirm the exit
+		if (confirmed == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
+	}
+	// main method
+	public static void main(String[] args) {
+		new MenuUserInterface();
+	}
+}
