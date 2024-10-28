@@ -27,6 +27,8 @@ public class MenuUserInterface extends JFrame {
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setBackground(Color.WHITE);
+		// add border to text area
+		textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		add(new JScrollPane(textArea), BorderLayout.CENTER);
 		
 		// lets create the menu bar and menu w/ our label
@@ -81,6 +83,8 @@ public class MenuUserInterface extends JFrame {
 		Color randomColor = getRandomGreenColor();
 		// change the background color
 		getContentPane().setBackground(randomColor);
+		textArea.setBackground(randomColor);
+		revalidate();
 		// repaint the frame to apply new color
 		repaint();
 		// Display the new color with its hex format
@@ -91,7 +95,7 @@ public class MenuUserInterface extends JFrame {
 		// our random object
 		Random random = new Random();
 		// random value of green
-		int green = random.nextInt(256);
+		int green = 128 + random.nextInt(128);
 		int red = random.nextInt(128);
 		int blue = random.nextInt(128);
 		// return random green color RGB
