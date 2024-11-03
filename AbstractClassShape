@@ -1,0 +1,7 @@
+// Abstract class that represents a generic shape
+public abstract class Shape {
+	// An abstract method "surface_area ()" of return type double
+	public abstract double surface_area();
+	//An abstract method "volume()" of return type double
+	public abstract double volume();
+}
