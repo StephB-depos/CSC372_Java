@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class SumOfNumbers {
+	public static void main(String[] args) {
+		// create our scanner to read user input
+		Scanner scanner = new Scanner(System.in);
+		
+		// Get 5 numbers from user
+		System.out.println("Enter 5 numbers to calculate their sum: ");
+		// Initialize the sum and count and start recursion
+		int sum = calculateSum(scanner, 0, 0);
+		// output sum
+		System.out.println("The sum of the entered number is: " + sum);
+		//close our scanner to avoid resource leaks
+		scanner.close();
+	}
+	// recursive method to calculate our sum
+	public static int calculateSum(Scanner scanner, int count, int sum) {
+		// stop after count == 5
+		if(count == 5) {
+			// return sum
+			return sum;
+		}
+		// ask user to input the next number
+		System.out.println("Enter number " + (count + 1) + ": ");
+		// check if the user enters a valid integer
+		while (!scanner.hasNextInt()) {
+			// if the input is not an integer throw error and prompt user again
+			System.out.println("Invalid input! Please enter a valid integer.");
+			// discard the invalid input
+			scanner.next();
+			//prompt again
+			System.out.print("Enter number " + (count + 1) + ": ");
+		}
+		
+		// read in valid integer entered by the user
+		int number = scanner.nextInt();
+		
+		// recursively call the method with updated count and sum - add number to the sum
+		return calculateSum(scanner, count + 1, sum + number);
+	}
+}
