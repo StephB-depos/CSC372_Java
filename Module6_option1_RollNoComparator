@@ -1,0 +1,15 @@
+// Comparator interface
+import java.util.Comparator;
+
+// Define a comparator to compare students by their Student Roll number
+public class StudentRollnoComparator implements Comparator<StudentArray> {
+	// implement our compare method to compare two students
+	@Override
+	public int compare(StudentArray s1, StudentArray s2) {
+		// compare the roll no of two students
+		// returns negative is S1's roll no. is less than S2's
+		// returns 0 if they are equal
+		// returns positive is S1's roll no. is greater than S2's
+		return Integer.compare(s1.getRollNo(), s2.getRollNo());
+	}
+}
