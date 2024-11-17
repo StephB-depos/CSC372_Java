@@ -1,0 +1,54 @@
+import java.util.ArrayList;
+
+public class StudentTest {
+    
+    // Method to manually test the addition of students
+    public static void testAddStudents() {
+        // Create an ArrayList to store Student objects
+        ArrayList<StudentArray> students = new ArrayList<>();
+
+        // Adding 10 students to the list
+        students.add(new StudentArray(101, "Alice", "123 Elm St"));
+        students.add(new StudentArray(102, "Bob", "456 Oak St"));
+        students.add(new StudentArray(103, "Charlie", "789 Pine St"));
+        students.add(new StudentArray(104, "David", "101 Maple St"));
+        students.add(new StudentArray(105, "Eve", "202 Birch St"));
+        students.add(new StudentArray(106, "Frank", "303 Cedar St"));
+        students.add(new StudentArray(107, "Grace", "404 Redwood St"));
+        students.add(new StudentArray(108, "Hannah", "505 Willow St"));
+        students.add(new StudentArray(109, "Ivy", "606 Ash St"));
+        students.add(new StudentArray(110, "Jack", "707 Palm St"));
+
+        // Check the list size (it should be 10)
+        if (students.size() == 10) {
+            System.out.println("testAddStudents passed! List contains 10 students.");
+        } else {
+            System.out.println("testAddStudents failed! Expected 10 students, but got " + students.size());
+        }
+
+        // Verify details of the first student
+        if (students.get(0).getRollNo() == 101 && students.get(0).getName().equals("Alice")) {
+            System.out.println("First student added correctly!");
+        } else {
+            System.out.println("First student test failed!");
+        }
+
+        // Verify details of the last student
+        if (students.get(9).getRollNo() == 110 && students.get(9).getName().equals("Jack")) {
+            System.out.println("Last student added correctly!");
+        } else {
+            System.out.println("Last student test failed!");
+        }
+
+        // Print out the details of all students using toString() method
+        System.out.println("\nDetails of all students:");
+        for (StudentArray student : students) {
+            System.out.println(student);  // This will automatically call toString()
+        }
+    }
+
+    public static void main(String[] args) {
+        // Run the test method
+        testAddStudents();
+    }
+}
