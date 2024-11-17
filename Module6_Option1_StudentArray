@@ -1,0 +1,32 @@
+// our student class that represents a student object
+public class StudentArray {
+	// variables for rollno, student name, student address
+	int rollno;
+	String name; 
+	String address;
+	
+	// constructor to initialize a student object w/ rollno, name, and address
+	public StudentArray(int rollno, String name, String address) {
+		// set rollno, name, address
+		this.rollno = rollno;
+		this.name = name;
+		this.address = address;
+	}
+	
+	// getters to getRollno, getName, getAddress
+	public int getRollNo() {
+		return rollno;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getAddress() {
+		return address;
+	}
+	// Over ride the toString method to represent the student as a string value
+	@Override
+	public String toString() {
+		// return our student details as string
+		return "Roll Number: " + rollno + ", Student Name: " + name + ", Student Address: " + address;
+	}
+}
