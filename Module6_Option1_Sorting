@@ -1,0 +1,115 @@
+// import an array list
+import java.util.ArrayList;
+// import our scanner to get input
+import java.util.Scanner;
+
+public class StudentSorting {
+	// our main class
+	public static void main(String[] args) {
+		// create our scanner to take input
+		Scanner scanner = new Scanner(System.in);
+		// create our array list to store students
+		ArrayList<StudentArray> students = new ArrayList<>();
+		
+		// prompt our user to enter 10 students details
+		System.out.println("Please enter details for 10 students:");
+		
+		// loop to collect our 10 student information
+		for (int i = 0; i < 10; i++) {
+			// print message to indicate which students details are entered (1-10)
+			System.out.println("Enter Details for Student " + (i + 1)+ ":");
+			
+			
+			// validation check for Roll number
+			int rollno = -1;
+			// loop to validate that roll number is a positive integer
+			while (rollno <= 0) {
+				// prompt the user for a positive roll number
+				System.out.print("Enter Roll Number(positive integer only): ");
+				
+				// loop until user enters an integer value
+				while(!scanner.hasNextInt()) {
+					// error message
+					System.out.println("Error: Invalid input. Please enter a valid positive integer!");
+					// eat the invalid input
+					scanner.next();
+				}
+				// read the roll number and store in variable
+				rollno = scanner.nextInt();
+				//consume the newline char
+				scanner.nextLine();
+				
+				// check if roll number is positive
+				if (rollno <= 0) {
+					// error message
+					System.out.println("ERROR: Roll number must be a positive integer!");
+				}
+			}
+			// validation check for name
+			// empty string for name
+			String name = "";
+			
+			// loop to ensure the name is not empty
+			while(name.trim().isEmpty()) {
+				// prompt user for students full name
+				System.out.print("Enter Students Full Name: ");
+				// read and store
+				name = scanner.nextLine();
+				
+				// if name is empty print out this error message
+				if(name.trim().isEmpty()) {
+					// error message
+					System.out.print("ERROR: Name cannot be empty. Please try again.");
+				}
+			}
+			// validation check for address
+			// address is an empty string
+			String address = "";
+			
+			// loop to ensure address is not empty
+			while(address.trim().isEmpty()) {
+				// ask for address
+				System.out.println("Enter Student Address: ");
+				// read address and store
+				address = scanner.nextLine();
+				// if the address is empty print this error message
+				if (address.trim().isEmpty()) {
+					// error message
+					System.out.println("ERROR: Address cannot be empty. Please try again.");
+				}
+			}
+			//  creating a new array with validated data and adding it to student list
+			students.add(new StudentArray(rollno, name, address));
+		}
+		// print the original list of students
+		System.out.println("\nOriginal List of Students:");
+		// loop through students in the list and print their details out
+		for (StudentArray student: students) {
+			// student details
+			System.out.println(student);
+		}
+		// sort the students by name using the name comparator
+		StudentSelectionSort.selectionSort(students, new StudentNameComparator());
+		
+		// print our list of students sorted by name
+		System.out.println("\nStudents Sorted by Name:");
+		// loop through students in lists and print details
+		for (StudentArray student: students) {
+			// print details
+			System.out.println(student);
+		}
+		
+		// sort the students by their roll number and print
+		StudentSelectionSort.selectionSort(students, new StudentRollnoComparator());
+		
+		// print our list of students sorted by roll number
+		System.out.println("\nStudents Sorted by Roll Number: ");
+		// loop through students in the array list and print details
+		for(StudentArray student: students) {
+			// print details
+			System.out.println(student);
+		}
+		// close our scanner to avoid resource leaks
+		scanner.close();
+	}
+}
