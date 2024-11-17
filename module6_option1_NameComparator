@@ -1,0 +1,16 @@
+// Comparator interface
+import java.util.Comparator;
+
+// compare students by their name using comparator
+public class StudentNameComparator implements Comparator<StudentArray> {
+	@Override
+	// implement compare method
+	public int compare(StudentArray s1, StudentArray s2) {
+		// compares the names of the two students
+		// compares the names alphabetically
+		// returns negative number is S1's name is less than S2's
+		// returns positive number if S2's name is greater than S2's
+		// returns 0 if they are equal
+		return s1.getName().compareTo(s2.getName());
+	}
+}
