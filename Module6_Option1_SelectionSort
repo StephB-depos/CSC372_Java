@@ -1,0 +1,31 @@
+// add our utility to create array lists
+import java.util.ArrayList;
+import java.util.Comparator;
+
+public class StudentSelectionSort {
+	// create our method to perform selection sort while using the given comparator
+	public static <T> void selectionSort(ArrayList<T> list, Comparator<T> comparator) {
+		// get the size of our list
+		int n = list.size();
+		// our outer loop to iterate through the elements in our list
+		for (int i = 0; i < n - 1; i++) {
+			// assume the current element is the smallest
+			int minIndex = i;
+			
+			// Our inner loop to find the smallest element from the unsorted list
+			for (int j = i + 1; j <n; j++) {
+				// if j is smaller update the minIndex
+				if (comparator.compare(list.get(j), list.get(minIndex)) < 0) {
+					// smaller element found as j == minIndex
+					minIndex = j;
+				}
+			}
+			// swap our elements at index i and minIndex to correct position
+			T temp = list.get(i);
+			// index i gets set with smallest found element
+			list.set(i, list.get(minIndex));
+			// set minIndex to the element originally at index i
+			list.set(minIndex, temp);
+		}
+	}
+}
