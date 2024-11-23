@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+public class SumOfNumbers {
+	// Add constant variable that holds the maximum number of inputs
+	private static final int maxCount = 5;
+	// main
+	public static void main(String[] args) {
+		// create our scanner to read user input
+		Scanner scanner = new Scanner(System.in);
+		
+		// Get 5 numbers from user
+		System.out.println("Enter " + maxCount + " numbers to calculate their sum: ");
+		// Initialize the sum and count and start recursion
+		int sum = calculateSum(scanner, 0, 0);
+		// output sum
+		System.out.println("The sum of the entered number is: " + sum);
+		//close our scanner to avoid resource leaks
+		scanner.close();
+	}
+	// recursive method to calculate our sum
+	public static int calculateSum(Scanner scanner, int count, int sum) {
+		// stop after count == 5
+		if(count == maxCount) {
+			// return sum
+			return sum;
+		}
+		// prompt the user for input and get a valid number
+		int number = getValidNumber(scanner, count + 1);
+		
+		// Recursively call the method w/ updated count and sum
+		return calculateSum(scanner, count + 1, sum + number);
+	}
+	// Helper method to get a valid number from the user
+	public static int getValidNumber(Scanner scanner, int numberPrompt) {
+		int number = 0;
+		
+		// Loop until the user enters a valid number with the specified range
+		while(true) {
+			System.out.print("Enter number " + numberPrompt + ": ");
+			
+			try {
+				// check if input is int
+				if (scanner.hasNextInt()) {
+					number = scanner.nextInt();
+					
+					// range validation
+					if (number < 0) {
+						// give error message
+						System.out.println("ERROR: Please enter a non-negative number.");
+						// continue to ask for a valid number
+						continue;
+					}
+					//exit loop on valid input
+					break;
+				}
+				else {
+					// handle any non int input
+					System.out.println("ERROR: Invalid input! Please enter a valid number.");
+					// discard any bad input
+					scanner.next();
+				}
+			}
+			catch (Exception e) {
+				// handle any unexpected exceptions with the InputMismatchException
+				System.out.println("ERROR: Something went wrong. Please enter a better input.");
+				// discard bad input
+				scanner.next();
+			}
+		}
+		return number;
+	}
+}
