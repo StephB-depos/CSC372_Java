@@ -1,0 +1,89 @@
+import java.util.*;
+import java.io.*;
+
+public class StudentDataEntry {
+	public static void main(String[] args) {
+		// lets create a scanner object for user input
+		Scanner scanner = new Scanner(System.in);
+		// create our linked list to store student objects
+		LinkedList<Student> studentList = new LinkedList<>();
+		
+		// we will add a variable that can control the loop for entering multiple student
+		// set the default to yes so we can start the loop
+		String continueInput = "yes";
+		
+		// loop to collect the student data repeatedly
+		while (continueInput.equalsIgnoreCase("yes")) {
+			// prompt user for student name
+			System.out.print("Enter student's name: ");
+			// read the student's name from the user
+			String name = scanner.nextLine();
+			
+			//prompt user for address
+			System.out.print("Enter the student's address: ");
+			// read the student's address from the user
+			String address = scanner.nextLine();
+			
+			// GPA input validation loop
+			// variable to store GPA
+			double GPA = 0;
+			// flag to track if GPA input is valid
+			boolean validGPA = false;
+			
+			// loop until a valid GPA is entered
+			while(!validGPA) {
+				// prompt the user for the GPA
+				System.out.print("Enter student's GPA(0.0 to 4.0): ");
+				try {
+					// read the GPA input as a string
+					String gpaInput = scanner.nextLine();
+					// try to convert the GPA string to a double
+					GPA = Double.parseDouble(gpaInput);
+					
+					// check if the GPA is within the valid range
+					if (GPA >= 0.0 && GPA <= 4.0) {
+						// mark the GPA as valid
+						validGPA = true;
+					}
+					else {
+						// if not valid print error message
+						System.out.println("ERROR: Invalid GPA! Please enter a value between 0.0 and 4.0!");
+					}
+				}
+				catch (NumberFormatException e) {
+					// if the input is not a valid number
+					System.out.println("Not a valid input. Try Again.");
+				}
+			}
+			// lets create a new student list to hold our input
+			studentList.add(new Student(name, address, GPA));
+			
+			// ask the user if they want to enter another student
+			System.out.print("Do you want to enter another student? (yes/no): ");
+			// read the users response
+			continueInput = scanner.nextLine();
+		}
+		// sort student by names in ascending order
+		// sort using comparator based on name
+		Collections.sort(studentList, Comparator.comparing(Student::getName));
+		
+		//output the sorted data
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter("student.txt"))) {
+			// loop through the sorted student list
+			for (Student student : studentList) {
+				// write the student details to the file
+				writer.write(student.toString());
+				// add a newline after each student
+				writer.newLine();
+			}
+			// lets confirm the data was written to the file with a message
+			System.out.println("Student data has been written to the file 'students.txt'!");
+		}
+		catch(IOException e) {
+			// catch any IO exceptions when writing to the file and print error message
+			System.out.println("Error writing to the file 'student.txt': " + e.getMessage());
+		}
+		// close our scanner so we don't leaky any resources
+		scanner.close();
+	}
+}
