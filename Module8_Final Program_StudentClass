@@ -1,0 +1,35 @@
+class Student {
+	// private fields for name, address, GPA
+	private String name;
+	private String address;
+	private double GPA;
+	
+	// add our constructor to initialize a student object with name, address, and GPA
+	public Student(String name, String address, double GPA) {
+		this.name = name;
+		this.address = address;
+		this.GPA = GPA;
+	}
+	
+	// our getters
+	// getter for student name
+	public String getName() {
+		return name;
+	}
+	// getter for student address
+	public String getAddress() {
+		return address;
+	}
+	// getter for student GPA
+	public double getGPA() {
+		return GPA;
+	}
+	
+	// overide the toString method to define how to print the students details
+	@Override
+	public String toString() {
+		// return student details
+		return "Name: " + name + "\nAddress: " + address + "\nGPA: " + GPA;
+	}
+}
+
